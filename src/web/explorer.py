@@ -18,7 +18,7 @@ def get_one(name:str) -> Explorer:
         return service.get_one(name)
 
     except Missing as exc:
-        raise HTTPException(status_code=409, detail = exc.msg)
+        raise HTTPException(status_code=404, detail = exc.msg)
     
 @router.post("", status_code=201)
 @router.post("/", status_code=201)
@@ -26,7 +26,7 @@ def create(explorer: Explorer) -> Explorer:
     try:
         return service.create(explorer)
     except Duplicate as exc:
-        raise HTTPException(status_code = 404, detail=exc.msg)
+        raise HTTPException(status_code = 409, detail=exc.msg)
     
 
 @router.patch("/{name}")

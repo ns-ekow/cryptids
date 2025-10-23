@@ -39,8 +39,7 @@ def create(explorer: Explorer) -> Explorer:
     try:
         curs.execute(qry, params)
     except IntegrityError:
-        raise Duplicate(msg =
-        f"explorer {explorer.name} already exists")
+        raise Duplicate(msg = f"explorer {explorer.name} already exists")
     
     return get_one(explorer.name)
 
@@ -49,7 +48,7 @@ def modify(name:str, explorer: Explorer)-> Explorer:
     qry = """ update explorer
     set country =:country,
     name =:name,
-    description =:description,
+    description =:description
     
     where name =:name_orig
     """
@@ -65,7 +64,7 @@ def modify(name:str, explorer: Explorer)-> Explorer:
 
 
 
-def delete(name : str)-> bool:
+def delete(name : str)-> bool| None:
     if not name: return False
     qry = "delete from explorer where name = :name"
     params = {"name": name}
